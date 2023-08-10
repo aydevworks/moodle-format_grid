@@ -202,14 +202,9 @@ class restore_format_grid_plugin extends restore_format_plugin {
            can perform a clean up of restored grid image files after all the data is in place in the database
            for this to happen properly. */
         $target = $this->step->get_task()->get_target();
-        if (($target == backup::TARGET_NEW_COURSE) || ($target == backup::TARGET_EXISTING_DELETING)) {
+        if (($target == backup::TARGET_NEW_COURSE) || ($target == backup::TARGET_EXISTING_DELETING) || ($target == backup::TARGET_CURRENT_DELETING)) {
             $courseid = $this->task->get_courseid();
             $newsectionid = $this->task->get_sectionid();
-
-            if ($target == backup::TARGET_EXISTING_DELETING) {
-                // Delete any images associated with the target course.
-                \format_grid\toolbox::delete_images($courseid);
-            }
 
             if (empty($data->contenthash)) {
                 // Less than M4.0 backup file.
